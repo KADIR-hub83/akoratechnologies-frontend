@@ -226,7 +226,7 @@ export default function MobileAppSection() {
           </ul>
 
           <a
-            href="#contact"
+            href="/home-page/contact"
             className="group mt-10 inline-flex items-center gap-2 rounded-full bg-[#14110D] px-7 py-3.5 text-sm font-medium text-[#FAF7F0] transition-transform duration-300 hover:-translate-y-0.5"
           >
             Start Your App

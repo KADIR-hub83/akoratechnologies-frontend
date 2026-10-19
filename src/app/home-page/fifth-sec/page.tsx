@@ -1159,11 +1159,12 @@ function AboutCta() {
           it needs.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-          <AkoraButton href="#" variant="primary" tone="onDark">
+          <AkoraButton href="/home-page/contact" 
+          variant="primary" tone="onDark">
             Start a project
           </AkoraButton>
           <a
-            href="#"
+            href="/company/about#work"
             className="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-[14.5px] font-medium text-white/70 ring-1 ring-white/15 transition-colors duration-300 hover:bg-white/[0.06]"
           >
             See our work
@@ -1171,7 +1172,7 @@ function AboutCta() {
           </a>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11.5px] uppercase tracking-[0.1em] text-white/40">
+        {/* <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11.5px] uppercase tracking-[0.1em] text-white/40">
           <span className="flex items-center gap-1.5">
             <MapPin className="h-3.5 w-3.5" /> HQ — Bangaluru, India
           </span>
@@ -1181,7 +1182,7 @@ function AboutCta() {
           <span className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" /> Web · App · SEO · AI · Robotics · Drone
           </span>
-        </div>
+        </div> */}
       </Reveal>
     </section>
   );
@@ -1199,7 +1200,7 @@ function AboutCta() {
 export default function AboutSection() {
   return (
     <main className="w-full">
-      <AboutHero />
+      {/* <AboutHero /> */}
       <AboutNarrative />
       <MissionVisionValue />
       <CapabilitiesGrid />

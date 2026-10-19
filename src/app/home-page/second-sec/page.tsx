@@ -510,7 +510,7 @@ export default function ShowcaseSection() {
                 </div>
 
                 <a
-                  href="#contact"
+                  href="/home-page/contact"
                   className="hidden shrink-0 items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#0B0A08] transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex"
                 >
                   Start a project
@@ -538,7 +538,7 @@ export default function ShowcaseSection() {
               </div>
 
               <a
-                href="#contact"
+                href="/home-page/contact"
                 className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#0B0A08] sm:hidden"
               >
                 Start a project

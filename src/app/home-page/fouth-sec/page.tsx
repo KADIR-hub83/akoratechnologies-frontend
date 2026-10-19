@@ -336,7 +336,7 @@ export default function RoboticsDroneSection() {
             }`}
           >
             <a
-              href="#contact"
+              href="/home-page/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-[#0B0A08] transition-transform duration-300 hover:-translate-y-0.5"
             >
               Talk to Our R&D Team

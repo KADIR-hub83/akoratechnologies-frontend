@@ -13,9 +13,76 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const BASE_URL = "https://akoratechnologies.vercel.app";
+
 export const metadata: Metadata = {
-  title: "AKORA Technologies - Consulting, Development, and Design Services",
-  description: "AKORA Technologies is a leading consulting, development, and design services company that helps businesses achieve their digital transformation goals. Our team of experts specializes in delivering innovative solutions that drive growth and efficiency.",
+  metadataBase: new URL(BASE_URL),
+
+  title: {
+    default:
+      "AKORA Technologies | Website Development, Software & Digital Solutions",
+    template: "%s | AKORA Technologies",
+  },
+
+  description:
+    "AKORA Technologies provides professional website development, software development, mobile app development, UI/UX design, and digital solutions to help businesses grow.",
+
+  applicationName: "AKORA Technologies",
+
+  keywords: [
+    "AKORA Technologies",
+    "Akora Technologies",
+    "AKORA",
+    "Akora",
+    "Akora Tech",
+    "AKORA Technologies website",
+    "website development company",
+    "software development company",
+    "mobile app development",
+    "web design",
+    "UI UX design",
+    "digital solutions",
+  ],
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    url: BASE_URL,
+    siteName: "AKORA Technologies",
+    title:
+      "AKORA Technologies | Website Development & Software Solutions",
+    description:
+      "Build your business online with AKORA Technologies — website development, software, mobile apps, and digital design.",
+    images: [
+      {
+        url: "/akoralogopngfinal.png",
+        alt: "AKORA Technologies Logo",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "AKORA Technologies | Digital Solutions",
+    description:
+      "Website development, software development, mobile apps, and design by AKORA Technologies.",
+    images: ["/akoralogopngfinal.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -30,7 +97,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        </body>
+      </body>
     </html>
   );
 }

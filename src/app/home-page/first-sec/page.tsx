@@ -306,7 +306,7 @@ function LiveConsole() {
           <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
           <div className="ml-3 flex items-center gap-1 rounded-full bg-white px-3 py-1 font-[var(--font-mono)] text-[11px] text-[#6B6B74] shadow-inner">
-            akoratechnologies.com
+            akoratechnologies.vercel.app
           </div>
         </div>
 
@@ -594,14 +594,14 @@ export default function FirstSection() {
             }`}
           >
             <MagneticButton
-              href="#contact"
+              href="/home-page/contact"
               className="group relative overflow-hidden rounded-full bg-gradient-to-r from-[#9C7A3C] to-[#C7A165] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_20px_40px_-10px_rgba(156,122,60,0.45)]"
             >
               <span className="relative z-10">Start Your Project →</span>
               <span className="absolute inset-0 -translate-x-[130%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-500 group-hover:translate-x-[130%]" />
             </MagneticButton>
             <MagneticButton
-              href="#work"
+              href="company/about#work"
               className="rounded-full border border-[#E7E4DC] bg-white px-7 py-4 text-[15px] font-medium text-[#0E0E10] transition-colors hover:border-[#0E0E10]"
             >
               View Our Work

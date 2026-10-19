@@ -288,13 +288,29 @@ export default function Navbar() {
             className="w-12 h-12 object-contain"
           />
 
-          <span
-            className={`font-display hidden lg:inline-flex font-bold text-lg transition-colors ${
-              scrolled ? "text-ink" : "text-black"
-            }`}
-          >
-            AKORA Technologies
-          </span>
+ <span
+  className={`font-display relative hidden lg:inline-flex font-bold text-lg transition-colors ${
+    scrolled ? "text-ink" : "text-black"
+  }`}
+>
+  AKORA Technologies
+
+    <svg
+      viewBox="0 0 420 18"
+      preserveAspectRatio="none"
+      className="absolute -bottom-2 left-0 w-full h-[16px] pointer-events-none"
+    >
+      <path
+        d="M2 13 C 100 4, 320 4, 418 13"
+        fill="none"
+        stroke="#C7A165"
+        strokeWidth="3"
+        strokeLinecap="round"
+        className="animate-akora-draw"
+        pathLength={1}
+      />
+    </svg>
+</span>
         </a>
 
         {/* Desktop nav */}
@@ -351,7 +367,7 @@ export default function Navbar() {
           ))}
 
           <a
-            href="/contact"
+            href="/home-page/contact"
             className={`nav-underline text-sm font-medium transition-colors ${linkColor}`}
           >
             Contact
@@ -361,7 +377,7 @@ export default function Navbar() {
         {/* CTA + mobile toggle */}
         <div className="flex items-center gap-3">
           <MagneticButton
-            href="/contact"
+            href="/home-page/contact"
             className={[
               "hidden lg:inline-flex rounded-full px-5 py-2.5 text-[13px] font-semibold text-white shadow-[0_10px_24px_rgba(14,14,16,0.18)]",
               scrolled
@@ -466,14 +482,14 @@ export default function Navbar() {
           })}
 
           <a
-            href="/contact"
+            href="/home-page/contact"
             className="block py-4 text-black font-medium text-sm"
           >
             Contact
           </a>
 
           <a
-            href="/contact"
+            href="/home-page/contact"
             className="mt-2 flex items-center justify-center w-full py-3 rounded-full bg-white text-ink text-sm font-semibold"
           >
             Start a Project

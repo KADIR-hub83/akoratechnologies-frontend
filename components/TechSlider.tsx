@@ -211,7 +211,7 @@ function LogoCard({ tech }: { tech: Tech }) {
   return (
     // outer box keeps the exact same 76px footprint as before
     <div className="group/card relative h-[76px] w-[76px] shrink-0">
-      {/* visible dark tile, inset so tiles have a natural gap between them */}
+     
       <div
         className="absolute inset-[6px] flex items-center justify-center rounded-2xl ring-1 ring-inset ring-white/10 transition-all duration-500 group-hover/card:-translate-y-1 group-hover/card:ring-white/25"
         style={{
@@ -276,12 +276,12 @@ function MarqueeRow({
 
 export default function TechStackSlider() {
   return (
-    <section className="relative overflow-hidden bg-[#efeae0] px-2">
+    <section className="relative overflow-hidden bg-[#fbfaf6] ">
       <div className="flex flex-col gap-">
         {/* top row: right -> left */}
-        <MarqueeRow items={ROW_1} direction="left" duration={80} />
+        <MarqueeRow items={ROW_1} direction="left" duration={70} />
         {/* bottom row: left -> right */}
-        <MarqueeRow items={ROW_2} direction="right" duration={74} />
+        <MarqueeRow items={ROW_2} direction="right" duration={70} />
       </div>
 
       <style jsx global>{`
@@ -292,9 +292,9 @@ export default function TechStackSlider() {
           animation-play-state: running;
           will-change: transform;
         }
-        .tech-marquee-track:hover {
-          animation-play-state: paused;
-        }
+        // .tech-marquee-track:hover {
+        //   animation-play-state: paused;
+        // }
         .tech-dir-left {
           animation-name: tech-slide-left;
         }
