@@ -329,7 +329,7 @@ export default function AboutPage() {
       <Navbar />
 
       {/* NO background on <main> — it would cover the fixed footer */}
-      <main className="relative z-20 text-[#141414]">
+      <main className="relative z-20 text-[#141414] overflow-x-hidden">
         <PageRevealWrapper>
           {/* ============================== HERO ============================== */}
           <section className="relative overflow-hidden bg-[#F4F1E9] px-6 pb-14 pt-24 md:px-12 md:pb-16 md:pt-28">

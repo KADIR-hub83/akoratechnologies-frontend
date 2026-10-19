@@ -262,7 +262,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 flex justify-center text-black
-        transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]
+        transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] 
         ${
           navVisible || mobileOpen
             ? "translate-y-0"
