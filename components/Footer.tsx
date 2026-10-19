@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 /**
  * AKORA — Premium "reveal" footer (Sundown Studio style)
@@ -62,6 +63,7 @@ const solutionsLinks = [
 
 const companyLinks = ["About", "Careers", "Blog", "Contact"];
 const resourceLinks = ["Case Studies", "Documentation", "FAQs"];
+
 
 const socials = [
   {
@@ -129,19 +131,105 @@ function FooterLinkColumn({ title, links }: { title: string; links: string[] }) 
   );
 }
 
+const CONTACT = {
+  email: "akoratechnologies@gmail.com",
+  phone: "tel:+917760172353", // tap = direct dialer
+  whatsapp:
+    "https://wa.me/917225878057?text=" +
+    encodeURIComponent(
+      "Hello AKORA Technologies, I have a project in mind and would like to discuss it."
+    ), // tap = direct WhatsApp chat
+} as const;
+ 
+/* ------------------------------- Brand icons ------------------------------ */
+ 
+const PhoneIcon = () => (
+  <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+    <path
+      fill="#fff"
+      d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"
+    />
+  </svg>
+);
+ 
+const WhatsAppIcon = () => (
+  <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+    <path
+      fill="#fff"
+      d="M12.04 2a9.9 9.9 0 0 0-8.5 14.95L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.08.89.9-3-.2-.31a8.2 8.2 0 1 1 6.88 3.75Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.22-.08-.39-.12-.55.12-.17.25-.64.8-.78.97-.14.16-.29.18-.54.06a6.7 6.7 0 0 1-3.3-2.88c-.25-.43.25-.4.72-1.34.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.66.31c-.22.25-.86.84-.86 2.05s.88 2.38 1 2.55c.12.16 1.73 2.64 4.2 3.7 1.55.67 2.16.73 2.94.61.47-.07 1.46-.6 1.66-1.18.2-.58.2-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"
+    />
+  </svg>
+);
+ 
+const MailIcon = () => (
+  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden="true">
+    <rect x="3" y="5.5" width="18" height="13" rx="2" stroke="#fff" strokeWidth="1.8" />
+    <path
+      d="m3.5 7 8.5 6.5L20.5 7"
+      stroke="#fff"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+ 
+/* ------------------------------ Icon button ------------------------------- */
+ 
+type IconLinkProps = {
+  href: string;
+  label: string;
+  icon: ReactNode;
+  bg: string; // tailwind gradient classes
+  external?: boolean;
+};
+ 
+function IconLink({ href, label, icon, bg, external }: IconLinkProps) {
+  return (
+    <a
+      href={href}
+      title={label}
+      aria-label={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className={`group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl shadow-md ring-1 ring-white/15 transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A56A] motion-reduce:transition-none motion-reduce:hover:transform-none ${bg}`}
+    >
+      {/* glossy top highlight (like the reference icons) */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-white/0"
+      />
+      <span className="relative">{icon}</span>
+    </a>
+  );
+}
+
+
+
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
 
   const year = new Date().getFullYear();
+
+  useEffect(() => {
+  const el = footerRef.current;
+  if (!el) return;
+  const update = () =>
+    document.documentElement.style.setProperty("--footer-h", `${el.offsetHeight}px`);
+  update();
+  const ro = new ResizeObserver(update);
+  ro.observe(el);
+  return () => ro.disconnect();
+}, []);
 
   return (
     <>
       {/* keeps the reveal height in sync across the whole page */}
       <style>{`
-        :root {
-          --footer-h: 900px;
-        }
+       :root { --footer-h: 640px; }
+
         @media (min-width: 640px) {
           :root { --footer-h: 760px; }
         }
@@ -158,18 +246,11 @@ export default function Footer() {
       `}</style>
 
 <footer
+  ref={footerRef}
   className="
-    sticky bottom-0
-    z-0
-    flex flex-col
-    bg-[#0B0A08]
-    text-white
-
-    h-auto
+    relative z-0 flex flex-col bg-[#0B0A08] text-white
     min-h-[100svh]
-
-    md:h-[var(--footer-h)]
-    md:min-h-0
+    md:fixed md:inset-x-0 md:bottom-0 md:min-h-0
   "
 >
         {/* ambient glow */}
@@ -199,50 +280,41 @@ export default function Footer() {
         <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-between px-6 py-10 sm:px-10 md:px-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.2fr_1fr]">
             {/* left — big CTA */}
-            <div>
-              <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A]">
-                Let's talk
-              </span>
-              <h2 className="mt-4 font-serif text-3xl italic leading-[1.15] text-white sm:text-4xl lg:text-5xl">
-                Got a project
-                <br />
-                <span className="not-italic font-sans font-normal">in mind?</span>
-              </h2>
-
-              <a
-                href="mailto:hello@akoratechnologies.com"
-                className="group mt-6 inline-flex items-center gap-2 text-lg text-white/70 transition-colors duration-300 hover:text-white sm:text-xl"
-              >
-                hello@akoratechnologies.com
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </a>
-
-              {/* newsletter */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (email) setSubscribed(true);
-                }}
-                className="mt-8 flex max-w-sm items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] p-1.5 pl-5"
-              >
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="w-full bg-transparent text-sm text-white placeholder:text-white/35 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="shrink-0 rounded-full bg-[#C9A56A] px-4 py-2 text-xs font-semibold text-[#14110D] transition-transform duration-300 hover:-translate-y-0.5"
-                >
-                  {subscribed ? "Subscribed ✓" : "Notify me"}
-                </button>
-              </form>
-            </div>
+          <div>
+      <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A]">
+        Let&apos;s talk
+      </span>
+ 
+      <h2 className="mt-4 font-serif text-3xl italic leading-[1.15] text-white sm:text-4xl lg:text-5xl">
+        Got a project
+        <br />
+        <span className="font-sans font-normal not-italic">in mind?</span>
+      </h2>
+            <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
+        Call, message or email us. We usually reply within a few hours.
+      </p>
+      <div className="mt-6 flex items-center gap-3">
+        <IconLink
+          href={CONTACT.phone}
+          label="Call us"
+          bg="bg-gradient-to-br from-sky-400 to-blue-700"
+          icon={<PhoneIcon />}
+        />
+        <IconLink
+          href={CONTACT.whatsapp}
+          label="Chat on WhatsApp"
+          bg="bg-gradient-to-br from-[#5BD66B] to-[#2FA84A]"
+          icon={<WhatsAppIcon />}
+          external
+        />
+        <IconLink
+          href={`mailto:${CONTACT.email}`}
+          label="Send an email"
+          bg="bg-gradient-to-br from-[#E8645F] to-[#C33B3B]"
+          icon={<MailIcon />}
+        />
+      </div>
+    </div>
 
             {/* right — link columns */}
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
@@ -277,6 +349,7 @@ export default function Footer() {
                   Terms of Service
                 </a>
               </div>
+           
 
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

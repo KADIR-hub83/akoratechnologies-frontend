@@ -13,7 +13,7 @@ import MobileAppSection from "./home-page/third-sec/page";
 
 export default function Home() {
   return (
-    <div className="relative overflow-x-hidden">
+    <div className=" overflow-x-hidden ">
       <main className="relative z-20 bg-white ">
         <PageRevealWrapper>
          <FirstSection/>
