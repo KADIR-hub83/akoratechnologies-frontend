@@ -429,73 +429,218 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu panel */}
-      <div
-        className={[
-          "lg:hidden fixed inset-x-3 top-[76px] z-40 transition-all duration-300 ease-out origin-top",
-          mobileOpen
-            ? "opacity-100 scale-y-100 pointer-events-auto"
-            : "opacity-0 scale-y-95 pointer-events-none",
-        ].join(" ")}
-      >
-        <div className="bg-panel/98 backdrop-blur-xl border border-white/10 rounded-3xl p-4 max-h-[75vh] overflow-y-auto shadow-2xl shadow-black/50">
-          {NAV_ITEMS.map((item) => {
-            const isOpen = openMobileGroup === item.label;
 
-            return (
-              <div
-                key={item.label}
-                className="border-b border-white/5 last:border-none"
+{/* AKORA Technologies — Cream & Gold Mobile Navigation */}
+
+{/* AKORA Technologies — Unified Mobile Navigation */}
+<div
+  className={[
+    "lg:hidden fixed inset-x-3 top-[76px] z-50",
+    "origin-top transition-all duration-300 ease-out",
+    mobileOpen
+      ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
+      : "-translate-y-2 scale-[0.99] opacity-0 pointer-events-none",
+  ].join(" ")}
+  aria-hidden={!mobileOpen}
+>
+  <div className="relative overflow-hidden rounded-b-[22px] rounded-t-[4px] border border-t-0 border-[#D9C5A0] bg-[#F8F5EF] shadow-[0_18px_40px_-18px_rgba(70,52,27,0.22)]">
+
+    {/* Subtle gold divider matching the main header */}
+    <div className="h-[2px] w-full bg-gradient-to-r from-[#E9D8B6] via-[#B18A45] to-[#E9D8B6]" />
+
+    {/* Section heading */}
+    <div className="flex items-center justify-between px-5 pb-2 pt-5">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B7A60]">
+        Navigation
+      </p>
+
+      <span className="text-[10px] font-medium tracking-wide text-[#A38A61]">
+        AKORA TECHNOLOGIES
+      </span>
+    </div>
+
+    {/* Main menu */}
+    <nav aria-label="Mobile navigation" className="px-3 pb-2">
+      {NAV_ITEMS.map((item, index) => {
+        const isOpen = openMobileGroup === item.label;
+        const panelId = `akora-mobile-group-${index}`;
+
+        return (
+          <div
+            key={item.label}
+            className="border-b border-[#E7DED0] last:border-b-0"
+          >
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls={panelId}
+              onClick={() =>
+                setOpenMobileGroup(isOpen ? null : item.label)
+              }
+              className={[
+                "group flex w-full items-center gap-3 rounded-xl px-3 py-3.5 text-left",
+                "transition-colors duration-200",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B18A45]",
+                isOpen
+                  ? "bg-[#EEE5D7]"
+                  : "bg-transparent hover:bg-[#F0E9DE]",
+              ].join(" ")}
+            >
+              <span
+                className={[
+                  "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
+                  "text-[10px] font-semibold transition-colors duration-200",
+                  isOpen
+                    ? "bg-[#B18A45] text-white"
+                    : "border border-[#E5D6BD] bg-white text-[#967442]",
+                ].join(" ")}
               >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setOpenMobileGroup(isOpen ? null : item.label)
-                  }
-                  className="w-full flex items-center justify-between py-4 text-black font-medium text-sm"
-                >
-                  {item.label}
+                {String(index + 1).padStart(2, "0")}
+              </span>
 
-                  <ChevronIcon
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
+              <span
+                className={[
+                  "flex-1 text-sm font-medium",
+                  isOpen ? "text-[#9B7639]" : "text-[#292720]",
+                ].join(" ")}
+              >
+                {item.label}
+              </span>
 
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    isOpen ? "max-h-96 pb-3" : "max-h-0"
-                  }`}
-                >
+              <span
+                className={[
+                  "flex h-7 w-7 items-center justify-center rounded-full",
+                  "transition-all duration-200",
+                  isOpen
+                    ? "rotate-180 text-[#A47B39]"
+                    : "text-[#81786B]",
+                ].join(" ")}
+              >
+                <ChevronIcon className="h-4 w-4" />
+              </span>
+            </button>
+
+            {/* Expandable submenu */}
+            <div
+              id={panelId}
+              aria-hidden={!isOpen}
+              className={[
+                "grid transition-[grid-template-rows,opacity] duration-300 ease-in-out",
+                isOpen
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0",
+              ].join(" ")}
+            >
+              <div className="overflow-hidden">
+                <div className="ml-11 space-y-1 pb-3 pr-2">
                   {item.children.map((child) => (
                     <a
                       key={child.title}
                       href={child.href}
-                      className="block py-2.5 px-3 rounded-xl text-slate-300 text-sm hover:bg-white/5"
+                      tabIndex={isOpen ? 0 : -1}
+                      onClick={() => {
+                        setMobileOpen(false);
+                        setOpenMobileGroup(null);
+                      }}
+                      className="group/link flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-[13px] text-[#625A4F] transition-colors hover:bg-white hover:text-[#9B7639] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B18A45]"
                     >
-                      {child.title}
+                      <span>{child.title}</span>
+
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.7"
+                        className="h-4 w-4 shrink-0 text-[#B18A45] opacity-0 transition-all group-hover/link:translate-x-1 group-hover/link:opacity-100"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M5 12h14m-6-6 6 6-6 6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </a>
                   ))}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
+        );
+      })}
 
-          <a
-            href="/home-page/contact"
-            className="block py-4 text-black font-medium text-sm"
+      {/* Contact */}
+      <a
+        href="/home-page/contact"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMobileGroup(null);
+        }}
+        className="group flex items-center gap-3 rounded-xl px-3 py-3.5 transition-colors hover:bg-[#F0E9DE]"
+      >
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#E5D6BD] bg-white text-[#967442]">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            className="h-4 w-4"
+            aria-hidden="true"
           >
-            Contact
-          </a>
+            <path
+              d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.1-4.8A8.5 8.5 0 1 1 21 11.5Z"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
 
-          <a
-            href="/home-page/contact"
-            className="mt-2 flex items-center justify-center w-full py-3 rounded-full bg-white text-ink text-sm font-semibold"
+        <span className="flex-1 text-sm font-medium text-[#292720]">
+          Contact
+        </span>
+
+        <span className="text-sm text-[#A47B39] transition-transform group-hover:translate-x-1">
+          →
+        </span>
+      </a>
+    </nav>
+
+    {/* CTA */}
+    <div className="border-t border-[#E7DED0] p-4">
+      <a
+        href="/home-page/contact"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMobileGroup(null);
+        }}
+        className="group flex min-h-[54px] w-full items-center justify-between gap-3 rounded-full bg-gradient-to-r from-[#A47B39] to-[#C3A064] px-5 py-3 text-white shadow-[0_5px_14px_rgba(156,117,53,0.16)] transition-all duration-200 hover:shadow-[0_8px_20px_rgba(156,117,53,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B18A45] focus-visible:ring-offset-2"
+      >
+        <span className="text-sm font-semibold">
+          Start a Project
+        </span>
+
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            className="h-4 w-4"
+            aria-hidden="true"
           >
-            Start a Project
-          </a>
-        </div>
-      </div>
+            <path
+              d="M5 12h14m-6-6 6 6-6 6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
     </header>
   );
 }

@@ -108,6 +108,20 @@ const socials = [
     </svg>
   ),
 },
+{
+  name: "YouTube",
+  href: "https://www.youtube.com/@AKORATechnologies",
+  icon: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-4 w-4"
+      aria-hidden="true"
+    >
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.376.55A3.016 3.016 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136C4.495 20.5 12 20.5 12 20.5s7.505 0 9.376-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z" />
+    </svg>
+  ),
+},
 ];
 
 function FooterLinkColumn({ title, links }: { title: string; links: string[] }) {
