@@ -68,7 +68,7 @@ const resourceLinks = ["Case Studies", "Documentation", "FAQs"];
 const socials = [
   {
     name: "X",
-    href: "https://www.linkedin.com/in/akora-technologies-37ab33426?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    href: "https://x.com/akoratechno",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
         <path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-7-6.2 7H2l8.1-9.3L1.5 2h7l4.9 6.4L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z" />
@@ -95,15 +95,19 @@ const socials = [
       </svg>
     ),
   },
-  {
-    name: "GitHub",
-    href: "https://www.instagram.com/akoratechnologies?dlrf=MXkxa2Y0aXBscjR5YQ==",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-        <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
-      </svg>
-    ),
-  },
+{
+  name: "Facebook",
+  href: "https://www.facebook.com/share/19khgw7LYs/",
+  icon: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-4 w-4"
+    >
+      <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.023 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.705 4.533-4.705 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.49 0-1.956.93-1.956 1.886v2.276h3.328l-.532 3.49h-2.796V24C19.612 23.096 24 18.092 24 12.073Z" />
+    </svg>
+  ),
+},
 ];
 
 function FooterLinkColumn({ title, links }: { title: string; links: string[] }) {
