@@ -86,7 +86,7 @@ const socials = [
   },
   {
     name: "Instagram",
-    href: "https://www.instagram.com/akoratechnologies?dlrf=MXkxa2Y0aXBscjR5YQ==",
+    href: "https://www.instagram.com/akora_technologies?exln=ZjlldjRjNGU4bjdx",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
         <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
