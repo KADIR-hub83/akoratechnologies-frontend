@@ -3,27 +3,54 @@ import type { MetadataRoute } from "next";
 const BASE_URL = "https://akoratechnologies.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
+  const routes: MetadataRoute.Sitemap = [
     {
-      path: "/",
+      url: `${BASE_URL}/`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "weekly",
       priority: 1.0,
-      changeFrequency: "weekly" as const,
     },
     {
-      path: "/home-page/contact",
-      priority: 0.8,
-      changeFrequency: "monthly" as const,
+      url: `${BASE_URL}/company/about`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
-
-    // Apne baaki existing public routes yahan add karein:
-    { path: "/company/leadership", priority: 0.7, changeFrequency: "monthly" as const },
-    // { path: "/services", priority: 0.8, changeFrequency: "monthly" as const },
-    // { path: "/portfolio", priority: 0.8, changeFrequency: "weekly" as const },
+    {
+      url: `${BASE_URL}/company/leadership`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/company/careers`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/company/case-studies`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/home-page/contact`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/resources/webinars`,
+      lastModified: new Date("2026-11-09"),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
   ];
 
   return routes.map((route) => ({
-    url: `${BASE_URL}${route.path}`,
-    lastModified: new Date(),
+    url: route.url,
+    lastModified: route.lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));

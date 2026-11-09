@@ -46,7 +46,16 @@ export const metadata: Metadata = {
     "AKORA Web Development",
     "AKORA Custom Software",
     "AKORA Technologies Official Website",
-
+         "AKORA Technologies",
+    "Software Development Company",
+    "Website Development Company",
+    "Custom Software Development",
+    "Web Application Development",
+    "Mobile App Development",
+    "Business Website Development",
+    "IT Company",
+    "UI UX Design",
+    "SEO Optimized Website",
     "Software Development Company",
     "Software Development Company in India",
     "Website Development Company",
@@ -171,6 +180,64 @@ export const metadata: Metadata = {
   },
 };
 
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://akoratechnologies.vercel.app/#organization",
+
+  "name": "AKORA Technologies",
+  "alternateName": [
+    "Akora Technologies",
+    "AKORA",
+    "Akora Software Development Company"
+  ],
+
+  "url": "https://akoratechnologies.vercel.app",
+
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://akoratechnologies.vercel.app/akoralogopngfinal.png",
+    "width": 531,
+    "height": 466
+  },
+
+  "image": "https://akoratechnologies.vercel.app/akoralogopngfinal.png",
+
+  "description":
+    "AKORA Technologies is a software development company providing custom website development, web applications, mobile app development, UI/UX design and digital solutions.",
+
+  "email": "akoratechnologies@gmail.com",
+  "telephone": "+917225878057",
+
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+917225878057",
+    "email": "akoratechnologies@gmail.com",
+    "contactType": "sales",
+    "availableLanguage": ["English", "Hindi"]
+  },
+
+  "sameAs": [
+    "https://x.com/akoratechno",
+    "https://www.linkedin.com/in/akora-technologies-37ab33426/",
+    "https://www.instagram.com/akora_technologies/",
+    "https://www.facebook.com/share/19khgw7LYs/"
+  ],
+
+  "knowsAbout": [
+    "Software Development",
+    "Website Development",
+    "Custom Web Application Development",
+    "Mobile App Development",
+    "Business Software",
+    "UI UX Design",
+    "SEO Optimized Websites",
+    "Digital Solutions"
+  ]
+};
+
+
 // ORGANIZATION + WEBSITE STRUCTURED DATA
 const structuredData = {
   "@context": "https://schema.org",
@@ -252,6 +319,14 @@ export default function RootLayout({
             ),
           }}
         />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+  }}
+/>
+
       </head>
 
       <body className="min-h-full flex flex-col overflow-x-hidden">
