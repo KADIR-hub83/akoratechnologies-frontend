@@ -790,120 +790,152 @@ export default function FirstSection() {
       </nav> */}
 
       {/* hero grid */}
-      <div className="relative z-10 grid grid-cols-1 items-center gap-6 px-[6vw] pb-14 pt-20 md:grid-cols-[1.05fr_0.95fr] md:pt-30">
-        <div>
-          {/* <div
-            className={`transition-all duration-700 ease-out ${
-              showEyebrow ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-[#E7E4DC] bg-white px-4 py-2 font-[var(--font-mono)] text-[11px] uppercase tracking-[0.16em] text-[#9C7A3C] shadow-sm">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#9C7A3C]" />
-              India&apos;s Premium Build Studio
-            </span>
-          </div> */}
+      <div className="relative z-10 grid grid-cols-1 items-center gap-6 px-[6vw] pb-14 pt-10 md:grid-cols-[1.05fr_0.95fr] md:pt-20">
+  <div>
+  {/* SEO Eyebrow */}
+  <div
+    className={`transition-all duration-700 ease-out ${
+      showEyebrow
+        ? "translate-y-0 opacity-0"
+        : "translate-y-4 opacity-0"
+    }`}
+  >
+    <span className="inline-flex items-center gap-2.5 rounded-full border border-[#E7E4DC] bg-white px-4 py-2 font-[var(--font-mono)] text-[11px] uppercase tracking-[0.16em] text-[#9C7A3C] shadow-sm">
+      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#9C7A3C]" />
+      Website · App · Software Development
+    </span>
+  </div>
 
-          <h1
-            className={`mt-8 font-[var(--font-display)] text-[clamp(46px,4vw,88px)] font-medium leading-[1.02] tracking-tight transition-all duration-700 ease-out ${
-              showHeadline ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-          >
-            Websites that make
-            <br />
-            <span className="relative inline-block italic">
-              first impressions
-              <svg
-                viewBox="0 0 420 18"
-                className="absolute -bottom-2 left-0 w-full"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M2 13 C 100 4, 320 4, 418 13"
-                  fill="none"
-                  stroke="#C7A165"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  className="animate-akora-draw"
-                  pathLength={1}
-                />
-              </svg>
-            </span>{" "}
-            unforgettable.
-          </h1>
+  {/* Main SEO Heading */}
+  <h1
+    className={`mt-8 font-[var(--font-display)] text-[clamp(36px,3vw,88px)] font-medium leading-[1.02] tracking-tight transition-all duration-700 ease-out ${
+      showHeadline
+        ? "translate-y-0 opacity-100"
+        : "translate-y-6 opacity-0"
+    }`}
+  >
+    Great Ideas Deserve
+    <br />
 
-<p
-  className={`mt-2 max-w-[540px] text-[18px] leading-[1.75] text-[#6B6B74] transition-all duration-700 ease-out ${
-    showCopy ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-  }`}
->
-  <span className="relative inline-block font-semibold text-[#111]">
-    AKORA TECHNOLOGIES
+    <span className="relative inline-block italic">
+      Extraordinary
+      <svg
+        viewBox="0 0 420 18"
+        className="absolute -bottom-2 left-0 w-full"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M2 13 C 100 4, 320 4, 418 13"
+          fill="none"
+          stroke="#C7A165"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className="animate-akora-draw"
+          pathLength={1}
+        />
+      </svg>
+    </span>{" "}
+    Execution.
+  </h1>
 
-    <svg
-      viewBox="0 0 420 18"
-      preserveAspectRatio="none"
-      className="absolute -bottom-2 left-0 w-full h-[12px] pointer-events-none"
+  {/* SEO-Optimized Description */}
+  <p
+    className={`mt-4 max-w-[540px] text-[14px] md:text-[16px] leading-[1.75] text-[#6B6B74] transition-all duration-700 ease-out ${
+      showCopy
+        ? "translate-y-0 opacity-100"
+        : "translate-y-4 opacity-0"
+    }`}
+  >
+    <span className="relative inline-block font-semibold text-[#111]">
+      AKORA TECHNOLOGIES
+      <svg
+        viewBox="0 0 420 18"
+        preserveAspectRatio="none"
+        className="absolute -bottom-2 left-0 h-[12px] w-full pointer-events-none"
+        aria-hidden="true"
+      >
+        <path
+          d="M2 13 C 100 4, 320 4, 418 13"
+          fill="none"
+          stroke="#C7A165"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className="animate-akora-draw"
+          pathLength={1}
+        />
+      </svg>
+    </span>{" "}
+    designs and develops premium websites, mobile applications,
+    custom software, and AI-powered digital solutions. We help
+    businesses build stronger brands, streamline operations, and
+    transform ambitious ideas into high-performance digital
+    experiences.
+  </p>
+
+  {/* CTA Buttons */}
+  <div
+    className={`mt-2 flex flex-wrap items-center gap-5 transition-all duration-700 ease-out ${
+      showActions
+        ? "translate-y-0 opacity-100"
+        : "translate-y-4 opacity-0"
+    }`}
+  >
+    <MagneticButton
+      href="/home-page/contact"
+      className="group relative overflow-hidden rounded-full bg-gradient-to-r from-[#9C7A3C] to-[#C7A165] px-4  md:px-8 py-2 md:py-4 md:text-[15px]  text-[12px] font-semibold text-white shadow-[0_20px_40px_-10px_rgba(156,122,60,0.45)]"
     >
-      <path
-        d="M2 13 C 100 4, 320 4, 418 13"
-        fill="none"
-        stroke="#C7A165"
-        strokeWidth="3"
-        strokeLinecap="round"
-        className="animate-akora-draw"
-        pathLength={1}
-      />
-    </svg>
-  </span>{" "}
-  designs and engineers websites and apps built to feel like a seven-figure
-  brand — from the first pixel to the last line of production code.
-</p>
+      <span className="relative z-10">
+        Start Your Project →
+      </span>
 
-          <div
-            className={`mt-4 flex flex-wrap items-center gap-5 transition-all duration-700 ease-out ${
-              showActions ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <MagneticButton
-              href="/home-page/contact"
-              className="group relative overflow-hidden rounded-full bg-gradient-to-r from-[#9C7A3C] to-[#C7A165] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_20px_40px_-10px_rgba(156,122,60,0.45)]"
-            >
-              <span className="relative z-10">Start Your Project →</span>
-              <span className="absolute inset-0 -translate-x-[130%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-500 group-hover:translate-x-[130%]" />
-            </MagneticButton>
-            <MagneticButton
-              href="company/about#work"
-              className="rounded-full border border-[#E7E4DC] bg-white px-7 py-4 text-[15px] font-medium text-[#0E0E10] transition-colors hover:border-[#0E0E10]"
-            >
-              View Our Work
-            </MagneticButton>
-          </div>
+      <span className="absolute inset-0 -translate-x-[130%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-500 group-hover:translate-x-[130%]" />
+    </MagneticButton>
 
-          <div
-            className={`mt-4 flex flex-wrap gap-8 transition-all duration-700 ease-out ${
-              showStats ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <div>
-              <div className="font-[var(--font-display)] text-[30px] italic">60+</div>
-              <div className="font-[var(--font-mono)] text-[11.5px] uppercase tracking-[0.12em] text-[#6B6B74]">
-                Projects shipped
-              </div>
-            </div>
-            <div>
-              <div className="font-[var(--font-display)] text-[30px] italic">4.9/5</div>
-              <div className="font-[var(--font-mono)] text-[11.5px] uppercase tracking-[0.12em] text-[#6B6B74]">
-                Client rating
-              </div>
-            </div>
-            <div>
-              <div className="font-[var(--font-display)] text-[30px] italic">12 days</div>
-              <div className="font-[var(--font-mono)] text-[11.5px] uppercase tracking-[0.12em] text-[#6B6B74]">
-                Avg. launch time
-              </div>
-            </div>
-          </div>
-        </div>
+    <MagneticButton
+      href="company/about#work"
+      className="rounded-full border border-[#E7E4DC] bg-white px-4 py-2 md:py-4 md:px-6 text-[12px] md:text-[15px] font-medium text-[#0E0E10] transition-colors hover:border-[#0E0E10]"
+    >
+      View Our Work
+    </MagneticButton>
+  </div>
+
+  {/* Trust Metrics */}
+  <div
+    className={`mt-2 flex flex-wrap gap-8 transition-all duration-700 ease-out ${
+      showStats
+        ? "translate-y-0 opacity-100"
+        : "translate-y-4 opacity-0"
+    }`}
+  >
+    <div>
+      <div className="font-[var(--font-display)] text-[20px]  md:text-[30px] italic">
+        60+
+      </div>
+      <div className="font-[var(--font-mono)] md:text-[11.5px] text-[9.5px]   uppercase tracking-[0.12em] text-[#6B6B74]">
+        Projects shipped
+      </div>
+    </div>
+
+    <div>
+      <div className="font-[var(--font-display)] text-[20px] md:text-[30px]  italic">
+        4.9/5
+      </div>
+      <div className="font-[var(--font-mono)] text-[9.5px] md:text-[11.5px] uppercase tracking-[0.12em] text-[#6B6B74]">
+        Client rating
+      </div>
+    </div>
+
+    <div>
+      <div className="font-[var(--font-display)] text-[20px] md:text-[30px]  italic">
+        12 days
+      </div>
+      <div className="font-[var(--font-mono)]  text-[9.5px] md:text-[11.5px]  uppercase tracking-[0.12em] text-[#6B6B74]">
+        Avg. launch time
+      </div>
+    </div>
+  </div>
+</div>
 
         {/* signature build console */}
         <div

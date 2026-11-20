@@ -275,7 +275,7 @@ export default function Navbar() {
           "w-full flex items-center justify-between transition-all duration-500 ease-out",
           scrolled
             ? "mt-3 mx-3 md:mx-6 max-w-[1200px] rounded-full bg-white/95 backdrop-blur-xl border border-black/5 shadow-xl shadow-black/10 px-6 md:px-8 py-3"
-            : "max-w-[1400px] px-6 md:px-10 py-5 bg-transparent",
+            : "max-w-[1400px] pr-6 md:px-10 py-5 bg-transparent",
         ].join(" ")}
       >
         {/* Logo */}
