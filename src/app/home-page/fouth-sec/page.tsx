@@ -273,7 +273,7 @@ export default function RoboticsDroneSection() {
         <div>
           <div
             ref={badgeRef}
-            className={`mb-6 inline-flex items-center gap-2 rounded-full border border-[#C9A56A]/25 bg-white/[0.03] px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A] transition-all duration-700 ease-out ${
+            className={`mb-2 inline-flex items-center gap-2 rounded-full border border-[#C9A56A]/25 bg-white/[0.03] px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A] transition-all duration-700 ease-out ${
               badgeVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >
@@ -283,7 +283,7 @@ export default function RoboticsDroneSection() {
 
           <h2
             ref={headRef}
-            className={`font-serif text-4xl italic leading-[1.15] text-white transition-all duration-700 ease-out sm:text-5xl ${
+            className={`font-serif text-4xl italic leading-[1.15] text-white transition-all duration-700 ease-out sm:text-4xl ${
               headVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
           >
@@ -294,7 +294,7 @@ export default function RoboticsDroneSection() {
 
           <p
             ref={paraRef}
-            className={`mt-6 max-w-md text-[15px] leading-relaxed text-white/50 transition-all duration-700 ease-out ${
+            className={`mt-2 max-w-md text-[15px] leading-relaxed text-white/50 transition-all duration-700 ease-out ${
               paraVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >
@@ -305,14 +305,14 @@ export default function RoboticsDroneSection() {
           </p>
 
           <div
-            className={`mt-6 inline-flex items-center gap-2 rounded-full border border-[#C9A56A]/20 bg-[#C9A56A]/[0.06] px-4 py-1.5 text-xs font-medium text-[#C9A56A] transition-all duration-700 ease-out ${
+            className={`mt-2 inline-flex items-center gap-2 rounded-full border border-[#C9A56A]/20 bg-[#C9A56A]/[0.06] px-4 py-1.5 text-xs font-medium text-[#C9A56A] transition-all duration-700 ease-out ${
               paraVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >
             🚧 Currently in active R&D
           </div>
 
-          <div ref={featRef} className="mt-10 space-y-6">
+          <div ref={featRef} className="mt-4 space-y-6">
             {features.map((f, i) => (
               <div
                 key={f.title}
@@ -331,7 +331,7 @@ export default function RoboticsDroneSection() {
 
           <div
             ref={ctaRef}
-            className={`mt-10 transition-all duration-700 ease-out ${
+            className={`mt-4 transition-all duration-700 ease-out ${
               ctaVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >

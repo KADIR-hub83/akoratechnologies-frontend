@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 /**
  * AKORA — Premium "reveal" footer (Sundown Studio style)
@@ -295,91 +297,109 @@ export default function Footer() {
         </div>
 
         {/* main content */}
-        <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-between px-6 py-10 sm:px-10 md:px-16">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.2fr_1fr]">
-            {/* left — big CTA */}
-          <div>
-      <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A]">
-        Let&apos;s talk
-      </span>
- 
-      <h2 className="mt-4 font-serif text-3xl italic leading-[1.15] text-white sm:text-4xl lg:text-5xl">
-        Got a project
-        <br />
-        <span className="font-sans font-normal not-italic">in mind?</span>
-      </h2>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
-        Call, message or email us. We usually reply within a few hours.
-      </p>
-      <div className="mt-6 flex items-center gap-3">
-        <IconLink
-          href={CONTACT.phone}
-          label="Call us"
-          bg="bg-gradient-to-br from-sky-400 to-blue-700"
-          icon={<PhoneIcon />}
+{/* main content */}
+<div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-between px-6 py-10 sm:px-10 md:px-16">
+  <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+    {/* left: brand + CTA */}
+    <div>
+      <Link
+        href="/"
+        aria-label="AKORA Technologies home"
+        className="inline-block"
+      >
+        <Image
+          src="/akoralogo.svg"
+          alt="AKORA Technologies"
+          width={160}
+          height={48}
+          priority
+          className="w-60 max-md:w-50 h-auto brightness-0 invert"
         />
-        <IconLink
-          href={CONTACT.whatsapp}
-          label="Chat on WhatsApp"
-          bg="bg-gradient-to-br from-[#5BD66B] to-[#2FA84A]"
-          icon={<WhatsAppIcon />}
-          external
-        />
-        <IconLink
-          href={`mailto:${CONTACT.email}`}
-          label="Send an email"
-          bg="bg-gradient-to-br from-[#E8645F] to-[#C33B3B]"
-          icon={<MailIcon />}
-        />
+      </Link>
+
+      <div className="">
+  
+
+        <h2 className=" font-serif text-3xl italic leading-[1.15] text-white sm:text-4xl lg:text-5xl">
+          Got a project
+          <br />
+          <span className="font-sans font-normal italic text-amber-200">in mind?</span>
+        </h2>
+
+        <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
+          Call, message or email us. We usually reply within a few hours.
+        </p>
+
+        <div className="mt-6 flex items-center gap-3">
+          <IconLink
+            href={CONTACT.phone}
+            label="Call us"
+            bg="bg-gradient-to-br from-sky-400 to-blue-700"
+            icon={<PhoneIcon />}
+          />
+          <IconLink
+            href={CONTACT.whatsapp}
+            label="Chat on WhatsApp"
+            bg="bg-gradient-to-br from-[#5BD66B] to-[#2FA84A]"
+            icon={<WhatsAppIcon />}
+            external
+          />
+          <IconLink
+            href={`mailto:${CONTACT.email}`}
+            label="Send an email"
+            bg="bg-gradient-to-br from-[#E8645F] to-[#C33B3B]"
+            icon={<MailIcon />}
+          />
+        </div>
       </div>
     </div>
 
-            {/* right — link columns */}
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-              <FooterLinkColumn title="Solutions" links={solutionsLinks} />
-              <FooterLinkColumn title="Company" links={companyLinks} />
-              <FooterLinkColumn title="Resources" links={resourceLinks} />
-            </div>
-          </div>
+    {/* right: link columns (top aligned with the logo) */}
+    <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:pt-2">
+      <FooterLinkColumn title="Solutions" links={solutionsLinks} />
+      <FooterLinkColumn title="Company" links={companyLinks} />
+      <FooterLinkColumn title="Resources" links={resourceLinks} />
+    </div>
+  </div>
 
-          {/* socials + bottom bar */}
-          <div className="mt-14">
-            <div className="flex flex-wrap items-center justify-between gap-6 border-t border-white/[0.08] pt-6">
-              <div className="flex items-center gap-3">
-                {socials.map((s) => (
-                  <a
-                    key={s.name}
-                    href={s.href}
-                    aria-label={s.name}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C9A56A]/50 hover:text-[#C9A56A]"
-                  >
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
+  {/* socials + bottom bar */}
+  <div className="mt-10">
+    <div className="flex flex-wrap items-center justify-between gap-6 border-t border-white/[0.08] pt-6">
+      <div className="flex items-center gap-3">
+        {socials.map((s) => (
+          <a
+            key={s.name}
+            href={s.href}
+            aria-label={s.name}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C9A56A]/50 hover:text-[#C9A56A]"
+          >
+            {s.icon}
+          </a>
+        ))}
+      </div>
 
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/40">
-                <span>© {year} AKORA Technologies. All rights reserved.</span>
-                <a href="#" className="transition-colors duration-300 hover:text-white/70">
-                  Privacy Policy
-                </a>
-                <a href="#" className="transition-colors duration-300 hover:text-white/70">
-                  Terms of Service
-                </a>
-              </div>
-           
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/40">
+        <span>© {year} AKORA Technologies. All rights reserved.</span>
+        <a href="#" className="transition-colors duration-300 hover:text-white/70">
+          Privacy Policy
+        </a>
+        <a href="#" className="transition-colors duration-300 hover:text-white/70">
+          Terms of Service
+        </a>
+      </div>
 
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C9A56A]/50 hover:text-[#C9A56A]"
-                aria-label="Back to top"
-              >
-                ↑
-              </button>
-            </div>
-          </div>
-        </div>
-
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C9A56A]/50 hover:text-[#C9A56A]"
+        aria-label="Back to top"
+      >
+        ↑
+      </button>
+    </div>
+  </div>
+</div>
         {/* giant bleeding wordmark */}
         {/* <div className="pointer-events-none relative -mb-6 select-none overflow-hidden text-center sm:-mb-10 lg:-mb-14">
           <span

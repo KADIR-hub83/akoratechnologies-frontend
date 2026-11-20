@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import Link from "next/link";
 import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/app/components/Navbar";
 
@@ -160,296 +162,565 @@ const TRUST_ITEMS = [
    then everything settles into its final resting state.
 ============================================================ */
 
-const FILES: { name: string; lines: string[] }[] = [
+// const FILES: { name: string; lines: string[] }[] = [
+//   {
+//     name: "page.tsx",
+//     lines: [
+//       '<span class="text-[#8b5cf6]">export default function</span> <span class="text-[#0ea5a0]">HomePage</span>() {',
+//       '&nbsp;&nbsp;<span class="text-[#8b5cf6]">return</span> (',
+//       '&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="text-[#c7a165]">Hero</span>',
+//       '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title=<span class="text-[#9C7A3C]">"Akora Technologies"</span>',
+//       '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;theme=<span class="text-[#9C7A3C]">"premium-white"</span>',
+//       "&nbsp;&nbsp;&nbsp;&nbsp;/&gt;",
+//       "&nbsp;&nbsp;);",
+//       "}",
+//     ],
+//   },
+//   {
+//     name: "style.css",
+//     lines: [
+//       ".hero {",
+//       '&nbsp;&nbsp;background: <span class="text-[#9C7A3C]">#FBFAF6</span>;',
+//       '&nbsp;&nbsp;font-family: <span class="text-[#9C7A3C]">"Fraunces"</span>, serif;',
+//       "&nbsp;&nbsp;letter-spacing: -0.02em;",
+//       "}",
+//       "",
+//       ".cta {",
+//       '&nbsp;&nbsp;background: <span class="text-[#9C7A3C]">linear-gradient(#C7A165, #9C7A3C)</span>;',
+//       "}",
+//     ],
+//   },
+//   {
+//     name: "deploy.sh",
+//     lines: [
+//       "$ akora build --production",
+//       '<span class="text-[#0ea5a0]">✓</span> Optimizing fonts &amp; images',
+//       '<span class="text-[#0ea5a0]">✓</span> Lighthouse score: 98 / 100',
+//       '<span class="text-[#0ea5a0]">✓</span> Deployed → akoratechnologies.com',
+//     ],
+//   },
+// ];
+
+/* ------------------------------ Code content ------------------------------ */
+
+type Kind = "k" | "s" | "c" | "f" | "p";
+type Tok = [string, Kind];
+type FileDef = { name: string; lines: Tok[][] };
+
+const TOKEN_COLOR: Record<Kind, string> = {
+  k: "text-[#9C7A3C] font-medium",
+  s: "text-[#2F7D6B]",
+  c: "text-[#A3A3AB] italic",
+  f: "text-[#1F2251]",
+  p: "text-[#3a3a40]",
+};
+
+const FILES: FileDef[] = [
   {
     name: "page.tsx",
     lines: [
-      '<span class="text-[#8b5cf6]">export default function</span> <span class="text-[#0ea5a0]">HomePage</span>() {',
-      '&nbsp;&nbsp;<span class="text-[#8b5cf6]">return</span> (',
-      '&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="text-[#c7a165]">Hero</span>',
-      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title=<span class="text-[#9C7A3C]">"Akora Technologies"</span>',
-      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;theme=<span class="text-[#9C7A3C]">"premium-white"</span>',
-      "&nbsp;&nbsp;&nbsp;&nbsp;/&gt;",
-      "&nbsp;&nbsp;);",
-      "}",
+      [["export default function ", "k"], ["Leadership", "f"], ["() {", "p"]],
+      [["  return ", "k"], ["<Hero", "f"], [" title=", "p"], ['"The people behind every build."', "s"]],
+      [["    orbit", "p"], ["={", "p"], ["true", "k"], ["} />", "f"]],
+      [["}", "p"]],
     ],
   },
   {
     name: "style.css",
     lines: [
-      ".hero {",
-      '&nbsp;&nbsp;background: <span class="text-[#9C7A3C]">#FBFAF6</span>;',
-      '&nbsp;&nbsp;font-family: <span class="text-[#9C7A3C]">"Fraunces"</span>, serif;',
-      "&nbsp;&nbsp;letter-spacing: -0.02em;",
-      "}",
-      "",
-      ".cta {",
-      '&nbsp;&nbsp;background: <span class="text-[#9C7A3C]">linear-gradient(#C7A165, #9C7A3C)</span>;',
-      "}",
+      [[".hero", "f"], [" {", "p"]],
+      [["  background: ", "p"], ["#F5F3EC", "s"], [";", "p"]],
+      [["  font-family: ", "p"], ['"Fraunces"', "s"], [", serif;", "p"]],
+      [["}", "p"]],
+      [[".orbit", "f"], [" {", "p"]],
+      [["  animation: ", "p"], ["spin 40s linear infinite", "s"], [";", "p"]],
+      [["}", "p"]],
     ],
   },
   {
     name: "deploy.sh",
     lines: [
-      "$ akora build --production",
-      '<span class="text-[#0ea5a0]">✓</span> Optimizing fonts &amp; images',
-      '<span class="text-[#0ea5a0]">✓</span> Lighthouse score: 98 / 100',
-      '<span class="text-[#0ea5a0]">✓</span> Deployed → akoratechnologies.com',
+      [["# ship it", "c"]],
+      [["$ ", "c"], ["npm run build", "p"]],
+      [["$ ", "c"], ["vercel --prod", "p"]],
+      [["✓ Deployed to production", "s"]],
     ],
   },
 ];
 
-function LiveConsole() {
+const lineLen = (l: Tok[]) => l.reduce((n, [t]) => n + t.length, 0);
+const fileLen = (f: FileDef) => f.lines.reduce((n, l) => n + lineLen(l) + 1, 0);
+
+function CodeView({ lines, count, typing }: { lines: Tok[][]; count: number; typing: boolean }) {
+  let left = count;
+  const out: ReactNode[] = [];
+  for (let li = 0; li < lines.length && left >= 0; li++) {
+    const line = lines[li];
+    const len = lineLen(line);
+    let used = left;
+    const spans: ReactNode[] = [];
+    line.forEach(([text, kind], ti) => {
+      if (used <= 0) return;
+      const part = text.slice(0, used);
+      used -= part.length;
+      spans.push(
+        <span key={ti} className={TOKEN_COLOR[kind]}>
+          {part}
+        </span>
+      );
+    });
+    const isCurrent = left <= len;
+    out.push(
+      <div key={li} className="flex">
+        <span className="w-7 shrink-0 select-none pr-3 text-right text-[#C4C1B6]">{li + 1}</span>
+        <span className="whitespace-pre">
+          {spans}
+          {isCurrent && typing && (
+            <span
+              className="akc-motion ml-0.5 inline-block h-4 w-[7px] translate-y-[3px] bg-[#9C7A3C]"
+              style={{ animation: "akc-blink 1s steps(1) infinite" }}
+            />
+          )}
+        </span>
+      </div>
+    );
+    left -= len + 1;
+  }
+  return <>{out}</>;
+}
+
+/* ------------------------------ Orbit content ----------------------------- */
+
+/* ------------------------------ Orbit content ----------------------------- */
+
+const portrait = (g: "men" | "women", n: number) =>
+  `https://randomuser.me/api/portraits/${g}/${n}.jpg`;
+
+const G1 = "from-[#C7A165] to-[#8a6a30]";
+const G2 = "from-[#3b3f8f] to-[#1F2251]";
+const G3 = "from-[#0ea5a0] to-[#0b6f6c]";
+const G4 = "from-[#E8645F] to-[#B8383A]";
+const G5 = "from-[#7a6df0] to-[#4a3fb8]";
+
+type Person = { n: string; src: string; g: string };
+
+// same photos as the leadership page (swap src with /team/xyz.jpg for real photos)
+const P = {
+  aarav: { n: "AK", src: portrait("men", 32), g: G1 },
+  rohan: { n: "RS", src: portrait("men", 44), g: G2 },
+  meera: { n: "MJ", src: portrait("women", 44), g: G3 },
+  pranav: { n: "PN", src: portrait("men", 65), g: G5 },
+  kabir: { n: "KV", src: portrait("men", 75), g: G2 },
+  ananya: { n: "AR", src: portrait("women", 68), g: G4 },
+  vikram: { n: "VS", src: portrait("men", 12), g: G3 },
+  isha: { n: "IP", src: portrait("women", 26), g: G1 },
+  dev: { n: "DM", src: portrait("men", 52), g: G5 },
+  sneha: { n: "SI", src: portrait("women", 12), g: G4 },
+  arnav: { n: "AG", src: portrait("men", 22), g: G2 },
+  tara: { n: "TM", src: portrait("women", 33), g: G3 },
+} satisfies Record<string, Person>;
+
+const RINGS: {
+  size: number;
+  dur: number;
+  rev: boolean;
+  avatars: { a: number; s: number; p: Person; gold?: boolean }[];
+}[] = [
+  {
+    size: 360,
+    dur: 42,
+    rev: false,
+    avatars: [
+      { a: 10, s: 46, p: P.aarav, gold: true },
+      { a: 100, s: 40, p: P.pranav },
+      { a: 190, s: 40, p: P.arnav },
+      { a: 280, s: 40, p: P.tara },
+    ],
+  },
+  {
+    size: 490,
+    dur: 60,
+    rev: true,
+    avatars: [
+      { a: 45, s: 42, p: P.rohan },
+      { a: 135, s: 40, p: P.meera },
+      { a: 225, s: 42, p: P.dev },
+      { a: 315, s: 40, p: P.sneha },
+    ],
+  },
+  {
+    size: 620,
+    dur: 80,
+    rev: false,
+    avatars: [
+      { a: 20, s: 44, p: P.kabir },
+      { a: 110, s: 42, p: P.ananya },
+      { a: 200, s: 44, p: P.vikram },
+      { a: 290, s: 42, p: P.isha },
+    ],
+  },
+];
+
+/** Round photo with gradient+initials fallback */
+function Face({
+  p,
+  size,
+  className = "",
+  ring = "ring-[3px] ring-white",
+}: {
+  p: Person;
+  size: number;
+  className?: string;
+  ring?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <div
+      className={`relative shrink-0 overflow-hidden rounded-full shadow-[0_10px_24px_-8px_rgba(14,14,16,0.45)] ${ring} ${className}`}
+      style={{ width: size, height: size }}
+    >
+      {failed ? (
+        <div
+          className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${p.g} font-[var(--font-mono)] text-[11px] font-semibold text-white`}
+        >
+          {p.n}
+        </div>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={p.src}
+          alt=""
+          loading="lazy"
+          onError={() => setFailed(true)}
+          className="h-full w-full object-cover"
+        />
+      )}
+    </div>
+  );
+}
+
+/* -------------------------------- Component ------------------------------- */
+
+type Phase = "typing" | "building" | "site";
+
+let hasPlayed = false;
+function LiveConsole({ visitHref = "/company/leadership" }: { visitHref?: string }) {
+  const [phase, setPhase] = useState<Phase>(hasPlayed ? "site" : "typing");
   const [activeTab, setActiveTab] = useState(0);
-  const [typed, setTyped] = useState<string[]>(["", "", ""]);
-  const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<"typing" | "building" | "preview">("typing");
-  const [cursorAt, setCursorAt] = useState({ x: 18, y: 18 });
-  const [clicked, setClicked] = useState(false);
-  const [toast, setToast] = useState(false);
-  const [bars, setBars] = useState([0, 0, 0, 0, 0]);
-  const [dot, setDot] = useState(0);
+  const [count, setCount] = useState(0);
+  const [progress, setProgress] = useState(hasPlayed ? 100 : 0);
+  const [step, setStep] = useState(hasPlayed ? 4 : 0);
+  const [showVisit, setShowVisit] = useState(hasPlayed);
 
+  // runs ONE time, no loop
   useEffect(() => {
-    let mounted = true;
+    if (hasPlayed) return;
 
-    async function run() {
-      while (mounted) {
-        // reset everything for a fresh cycle
-        setActiveTab(0);
-        setTyped(["", "", ""]);
-        setProgress(0);
-        setPhase("typing");
-        setCursorAt({ x: 18, y: 18 });
-        setClicked(false);
-        setToast(false);
-        setBars([0, 0, 0, 0, 0]);
-        setDot(0);
-        await new Promise((r) => setTimeout(r, 200));
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const at = (ms: number, fn: () => void) => timers.push(setTimeout(fn, ms));
 
-        // 1) type each file, tab by tab
-        for (let f = 0; f < FILES.length; f++) {
-          if (!mounted) return;
-          setActiveTab(f);
-          let built = "";
-          for (const line of FILES[f].lines) {
-            if (!mounted) return;
-            await new Promise((r) => setTimeout(r, 90));
-            built += (built ? "\n" : "") + line;
-            setTyped((prev) => {
-              const next = [...prev];
-              next[f] = built;
-              return next;
-            });
-          }
-          await new Promise((r) => setTimeout(r, 380));
+    const reveal = () => {
+      setPhase("site");
+      at(700, () => setStep(1)); // rings
+      at(1300, () => setStep(2)); // photos pop in
+      at(2000, () => setStep(3)); // headline + underline
+      at(2700, () => setStep(4)); // text + pill + badge
+      at(3500, () => {
+        setShowVisit(true); // Visit website
+        hasPlayed = true;
+      });
+    };
+
+    const build = () => {
+      setPhase("building");
+      let p = 0;
+      interval = setInterval(() => {
+        p += 2;
+        setProgress(Math.min(p, 100));
+        if (p >= 100) {
+          clearInterval(interval);
+          at(350, reveal);
         }
+      }, 20);
+    };
 
-        // 2) build progress bar
-        if (!mounted) return;
-        setPhase("building");
-        for (let p = 0; p <= 100; p += 4) {
-          if (!mounted) return;
-          setProgress(p);
-          await new Promise((r) => setTimeout(r, 22));
+    const typeFile = (f: number) => {
+      setActiveTab(f);
+      setCount(0);
+      const total = fileLen(FILES[f]);
+      let c = 0;
+      interval = setInterval(() => {
+        c += 2;
+        setCount(Math.min(c, total));
+        if (c >= total) {
+          clearInterval(interval);
+          at(380, () => (f + 1 < FILES.length ? typeFile(f + 1) : build()));
         }
-        await new Promise((r) => setTimeout(r, 300));
+      }, 16);
+    };
 
-        // 3) morph into live preview + choreographed micro-interactions
-        if (!mounted) return;
-        setPhase("preview");
-        await new Promise((r) => setTimeout(r, 500));
+    at(900, () => typeFile(0));
 
-        if (!mounted) return;
-        setCursorAt({ x: 78, y: 62 });
-        await new Promise((r) => setTimeout(r, 700));
-
-        if (!mounted) return;
-        setClicked(true);
-        await new Promise((r) => setTimeout(r, 220));
-        setToast(true);
-
-        const targets = [40, 70, 55, 90, 65];
-        for (let i = 0; i < targets.length; i++) {
-          if (!mounted) return;
-          await new Promise((r) => setTimeout(r, 90));
-          setBars((prev) => {
-            const next = [...prev];
-            next[i] = targets[i];
-            return next;
-          });
-        }
-
-        for (let d = 0; d < 3; d++) {
-          if (!mounted) return;
-          await new Promise((r) => setTimeout(r, 500));
-          setDot(d);
-        }
-
-        // hold the finished preview for a moment, then loop back
-        await new Promise((r) => setTimeout(r, 2200));
-      }
-    }
-
-    run();
     return () => {
-      mounted = false;
+      timers.forEach(clearTimeout);
+      if (interval) clearInterval(interval);
     };
   }, []);
 
+  const statusLabel = phase === "typing" ? "Coding" : phase === "building" ? "Building" : "Live";
+  const buildLabel = progress < 35 ? "Compiling…" : progress < 70 ? "Optimizing assets…" : "Deploying…";
+  const reveal = (n: number) =>
+    step >= n ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0";
+
   return (
     <div className="relative">
-      <div className="relative overflow-hidden rounded-[22px] border border-[#E7E4DC] bg-white shadow-[0_60px_120px_-40px_rgba(14,14,16,0.22)]">
-        {/* browser chrome */}
-        <div className="flex items-center gap-2 border-b border-[#E7E4DC] bg-[#FBFAF6] px-5 py-3.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-          <div className="ml-3 flex items-center gap-1 rounded-full bg-white px-3 py-1 font-[var(--font-mono)] text-[11px] text-[#6B6B74] shadow-inner">
-            akoratechnologies.vercel.app
-          </div>
-        </div>
+      <style>{`
+        @keyframes akc-spin { to { transform: rotate(360deg); } }
+        @keyframes akc-blink { 50% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .akc-motion { animation: none !important; } }
+      `}</style>
 
-        {/* file tabs */}
-        <div
-          className={`flex gap-1 border-b border-[#E7E4DC] bg-white px-3 pt-3 transition-opacity duration-500 ${
-            phase === "preview" ? "opacity-0 h-0 pointer-events-none overflow-hidden py-0" : "opacity-100"
-          }`}
-        >
-          {FILES.map((f, i) => (
-            <div
-              key={f.name}
-              className={`rounded-t-lg border border-b-0 px-4 py-2 font-[var(--font-mono)] text-[12px] transition-colors ${
-                i === activeTab
-                  ? "border-[#E7E4DC] bg-[#FBFAF6] text-[#0E0E10]"
-                  : "border-transparent text-[#6B6B74]"
-              }`}
-            >
-              {f.name}
+      <div className="relative">
+        <div className="relative overflow-hidden rounded-[22px] border border-[#E7E4DC] bg-white shadow-[0_60px_120px_-40px_rgba(14,14,16,0.22)]">
+          {/* browser chrome */}
+          <div className="flex items-center gap-2 border-b border-[#E7E4DC] bg-black/80 px-5 py-3.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+            <div className="ml-3 rounded-full bg-white/40 px-3 py-1 font-[var(--font-mono)] text-[11px] text-white shadow-inner">
+              akoratechnologies.vercel.app
             </div>
-          ))}
-        </div>
-
-        {/* editor body */}
-        <div
-          className={`relative min-h-[300px] md:min-h-[250px] transition-all duration-700 ${
-            phase === "preview" ? "opacity-0 scale-[0.98] absolute inset-0 pointer-events-none" : "opacity-100"
-          }`}
-        >
-          <div className="p-6 font-[var(--font-mono)] text-[13.5px] leading-8 text-[#3a3a40]">
-            <div dangerouslySetInnerHTML={{ __html: typed[activeTab] }} />
-            {phase === "typing" && (
-              <span className="ml-0.5 inline-block h-4 w-[7px] animate-akora-blink bg-[#9C7A3C] align-middle" />
-            )}
-          </div>
-
-          {phase === "building" && (
-            <div className="absolute inset-x-6 bottom-6">
-              <div className="mb-2 flex justify-between font-[var(--font-mono)] text-[11px] text-[#6B6B74]">
-                <span>Building for production…</span>
-                <span>{progress}%</span>
-              </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#EFEDE5]">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#C7A165] to-[#9C7A3C] transition-all duration-100"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* live product preview (morphed state) */}
-        <div
-          className={`relative min-h-[300px] md:min-h-[340px] p-6 transition-all duration-700 ${
-            phase === "preview" ? "opacity-100 scale-100" : "opacity-0 scale-[0.98] absolute inset-0 pointer-events-none"
-          }`}
-        >
-          <div className="mb-5 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="h-7 w-7 rounded-lg bg-gradient-to-br from-[#C7A165] to-[#1F2251]" />
-              <span className="font-[var(--font-display)] text-[15px] italic text-[#0E0E10]">Akora</span>
-            </div>
-            <div className="flex gap-5 font-[var(--font-mono)] text-[11px] text-[#6B6B74]">
-              <span>Work</span>
-              <span>Studio</span>
-              <span>Contact</span>
-            </div>
-          </div>
-
-          <div className="mb-1 h-3 w-3/4 rounded bg-[#EFEDE5]" />
-          <div className="mb-6 h-3 w-1/2 rounded bg-[#EFEDE5]" />
-
-          <div className="mb-6 grid grid-cols-5 items-end gap-2 rounded-xl border border-[#E7E4DC] bg-[#FBFAF6] p-4">
-            {bars.map((h, i) => (
-              <div key={i} className="flex h-16 items-end">
-                <div
-                  className="w-full rounded-t-md bg-gradient-to-t from-[#9C7A3C] to-[#C7A165] transition-all duration-700 ease-out"
-                  style={{ height: `${h}%` }}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-2">
-            {[0, 1, 2].map((i) => (
+            <div className="ml-auto flex items-center gap-1.5 font-[var(--font-mono)] text-[10.5px] text-[#6B6B74]">
               <span
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  dot === i ? "w-6 bg-[#9C7A3C]" : "w-1.5 bg-[#E7E4DC]"
+                className={`h-1.5 w-1.5 rounded-full ${
+                  phase === "site" ? "bg-[#28C840]" : "animate-pulse bg-[#C7A165]"
                 }`}
               />
-            ))}
-          </div>
-
-          {/* fake cursor + click ripple */}
-          <div
-            className="pointer-events-none absolute z-20 transition-all duration-700 ease-in-out"
-            style={{ left: `${cursorAt.x}%`, top: `${cursorAt.y}%` }}
-          >
-            <div className="relative -translate-x-1/2 -translate-y-1/2">
-              {clicked && (
-                <span className="absolute inline-flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-[#9C7A3C]/40" />
-              )}
-              <svg width="18" height="18" viewBox="0 0 18 18" className="drop-shadow-md">
-                <path d="M2 1 L2 15 L6 11.5 L8.5 16.5 L10.5 15.5 L8 10.5 L13 10.2 Z" fill="#0E0E10" />
-              </svg>
+              {statusLabel}
             </div>
           </div>
 
-          {/* toast */}
-          <div
-            className={`absolute bottom-6 right-6 flex items-center gap-2 rounded-xl border border-[#E7E4DC] bg-white px-4 py-3 shadow-[0_20px_40px_-10px_rgba(14,14,16,0.18)] transition-all duration-500 ${
-              toast ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-            }`}
-          >
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0ea5a0]/15 text-[#0ea5a0]">
-              ✓
-            </span>
-            <span className="font-[var(--font-mono)] text-[12px] text-[#0E0E10]">
-              Message sent
-            </span>
+          {/* fixed-height stage */}
+          <div className="relative h-[400px] sm:h-[440px]">
+            {/* ---------------------------- editor layer --------------------------- */}
+            <div
+              className={`absolute inset-0 flex flex-col bg-white transition-all duration-700 ${
+                phase === "site" ? "scale-[0.97] opacity-0 blur-[2px]" : "scale-100 opacity-100"
+              }`}
+            >
+              <div className="flex gap-1 border-b border-[#E7E4DC] px-3 pt-3">
+                {FILES.map((f, i) => (
+                  <div
+                    key={f.name}
+                    className={`rounded-t-lg border border-b-0 px-4 py-2 font-[var(--font-mono)] text-[12px] transition-colors ${
+                      i === activeTab
+                        ? "border-[#E7E4DC] bg-[#FBFAF6] text-[#0E0E10]"
+                        : "border-transparent text-[#6B6B74]"
+                    }`}
+                  >
+                    {f.name}
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex-1 overflow-hidden bg-[#FBFAF6] p-5 font-[var(--font-mono)] text-[12.5px] leading-7">
+                <CodeView
+                  lines={FILES[activeTab].lines}
+                  count={count}
+                  typing={phase === "typing"}
+                />
+              </div>
+
+              <div
+                className={`absolute inset-x-5 bottom-5 transition-opacity duration-300 ${
+                  phase === "building" ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <div className="mb-2 flex justify-between font-[var(--font-mono)] text-[11px] text-[#6B6B74]">
+                  <span>{buildLabel}</span>
+                  <span>{progress}%</span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#EFEDE5]">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#C7A165] to-[#9C7A3C] transition-all duration-100"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* ------------------------ premium website layer ---------------------- */}
+            <div
+              className="absolute inset-0 overflow-hidden bg-[#F5F3EC]"
+              style={{
+                clipPath:
+                  phase === "site" ? "circle(150% at 50% 50%)" : "circle(0% at 50% 50%)",
+                transition: "clip-path 1.1s cubic-bezier(.7,0,.2,1)",
+              }}
+            >
+              <div className="absolute inset-0 [background-image:radial-gradient(#E3DFD2_1px,transparent_1px)] [background-size:18px_18px]" />
+              <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C7A165]/15 blur-[90px]" />
+
+              {/* orbit rings + photo avatars */}
+              {RINGS.map((r, ri) => (
+                <div key={ri} className="absolute inset-0 flex items-center justify-center">
+                  <div
+                    className={`relative rounded-full border border-dashed border-[#D9D4C4] transition-all duration-1000 ${
+                      step >= 1 ? "scale-100 opacity-100" : "scale-75 opacity-0"
+                    }`}
+                    style={{ width: r.size, height: r.size, transitionDelay: `${ri * 150}ms` }}
+                  >
+                    <div
+                      className="akc-motion absolute inset-0"
+                      style={{
+                        animation: `akc-spin ${r.dur}s linear infinite ${
+                          r.rev ? "reverse" : "normal"
+                        }`,
+                      }}
+                    >
+                      {r.avatars.map((a, ai) => (
+                        <div
+                          key={ai}
+                          className="absolute inset-0"
+                          style={{ transform: `rotate(${a.a}deg)` }}
+                        >
+                          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+                            <div style={{ transform: `rotate(${-a.a}deg)` }}>
+                              {/* counter-spin keeps faces upright */}
+                              <div
+                                className="akc-motion"
+                                style={{
+                                  animation: `akc-spin ${r.dur}s linear infinite ${
+                                    r.rev ? "normal" : "reverse"
+                                  }`,
+                                }}
+                              >
+                                <Face
+                                  p={a.p}
+                                  size={a.s}
+                                  ring={a.gold ? "ring-[3px] ring-[#C7A165]" : "ring-[3px] ring-white"}
+                                  className={`transition-all duration-700 ${
+                                    step >= 2 ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                                  }`}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* centre content */}
+              <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+                <div
+                  className={`mb-4 inline-flex items-center gap-2 rounded-full border border-[#E7E4DC] bg-white/90 px-3 py-1.5 font-[var(--font-mono)] text-[9.5px] tracking-[0.18em] text-[#6B6B74] shadow-sm transition-all duration-700 ${reveal(3)}`}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#C7A165]" />
+                  LEADERSHIP &amp; TEAM
+                </div>
+
+                <h3
+                  className={`text-[26px] font-semibold leading-[1.04] tracking-tight text-[#0E0E10] transition-all duration-700 sm:text-[36px] ${reveal(3)}`}
+                >
+                  The people behind
+                  <br />
+                  <span className="relative inline-block bg-gradient-to-r from-[#5b4420] via-[#9C7A3C] to-[#C7A165] bg-clip-text font-[var(--font-display)] font-normal italic text-transparent">
+                    every build.
+                    <svg
+                      viewBox="0 0 200 8"
+                      className="absolute -bottom-1 left-0 w-full"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M2 5 Q 100 0 198 5"
+                        fill="none"
+                        stroke="#C7A165"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        pathLength={1}
+                        style={{
+                          strokeDasharray: 1,
+                          strokeDashoffset: step >= 3 ? 0 : 1,
+                          transition: "stroke-dashoffset 1s ease .4s",
+                        }}
+                      />
+                    </svg>
+                  </span>
+                </h3>
+
+                <p
+                  className={`mt-4 max-w-xs text-[12px] leading-relaxed text-[#6B6B74] transition-all duration-700 ${reveal(4)}`}
+                >
+                  Meet the founder, the leads and the engineers who turn ideas into websites,
+                  apps and machines that fly.
+                </p>
+
+                <div
+                  className={`mt-5 flex flex-wrap items-center justify-center gap-3 transition-all duration-700 ${reveal(4)}`}
+                >
+                  <div className="flex items-center gap-2 rounded-full border border-[#E7E4DC] bg-white py-1.5 pl-1.5 pr-4 shadow-sm">
+                    <div className="flex -space-x-2">
+                      {[P.aarav, P.rohan, P.meera, P.ananya].map((p, i) => (
+                        <Face key={i} p={p} size={24} ring="ring-2 ring-white" />
+                      ))}
+                    </div>
+                    <span className="text-[11px] text-[#3a3a40]">
+                      <b className="font-semibold">12 people</b>, one accountable team
+                    </span>
+                  </div>
+                  <span className="rounded-full bg-[#0E0E10] px-4 py-2 text-[11px] font-semibold text-white">
+                    Meet the founder ↗
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Visit website: INSIDE the box, bottom-right */}
+            <Link
+              href={visitHref}
+              tabIndex={showVisit ? 0 : -1}
+              className={`group absolute bottom-4 right-4 z-30 inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#0E0E10] px-5 py-2.5 text-[12.5px] font-semibold text-white shadow-[0_16px_32px_-10px_rgba(14,14,16,0.5)] ring-1 ring-white/10 transition-all duration-700 hover:-translate-y-0.5 ${
+                showVisit
+                  ? "translate-y-0 opacity-100"
+                  : "pointer-events-none translate-y-4 opacity-0"
+              }`}
+            >
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+              <span className="relative">Visit website</span>
+              <span className="relative transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
           </div>
         </div>
-      </div>
 
-      {/* floating "deployed" badge */}
-      <div className="absolute -bottom-6 -left-6 flex items-center gap-2.5 rounded-2xl border border-[#E7E4DC] bg-white px-4 py-3.5 font-[var(--font-display)] text-[13px] italic text-[#0E0E10] shadow-[0_30px_60px_-20px_rgba(14,14,16,0.25)] animate-akora-fadeup">
-        <span className="h-8 w-8 rounded-full border-[3px] border-[#C7A165] border-t-transparent animate-spin" />
-        Deployed to production
-      </div>
+        {/* floating "deployed" badge */}
+        <div
+          className={`absolute -bottom-5 -left-4 flex items-center gap-2.5 rounded-2xl border border-[#E7E4DC] bg-white px-4 py-3 font-[var(--font-display)] text-[13px] italic text-[#0E0E10] shadow-[0_30px_60px_-20px_rgba(14,14,16,0.25)] transition-all duration-700 ${
+            step >= 4 ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+          }`}
+        >
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0ea5a0]/15 text-[13px] not-italic text-[#0ea5a0]">
+            ✓
+          </span>
+          Deployed to production
+        </div>
 
-      {/* floating quality badge */}
-      <div className="absolute -top-5 -right-5 rounded-2xl border border-[#E7E4DC] bg-white px-4 py-3 text-center shadow-[0_30px_60px_-20px_rgba(14,14,16,0.25)] animate-akora-fadeup [animation-delay:1.6s]">
-        <div className="font-[var(--font-display)] text-lg italic text-[#0E0E10]">98/100</div>
-        <div className="font-[var(--font-mono)] text-[9.5px] uppercase tracking-[0.1em] text-[#9C7A3C]">
-          Lighthouse
+        {/* floating quality badge */}
+        <div className="absolute -right-5 -top-5 animate-akora-fadeup rounded-2xl border border-[#E7E4DC] bg-white px-4 py-3 text-center shadow-[0_30px_60px_-20px_rgba(14,14,16,0.25)] [animation-delay:1.6s]">
+          <div className="font-[var(--font-display)] text-lg italic text-[#0E0E10]">98/100</div>
+          <div className="font-[var(--font-mono)] text-[9.5px] uppercase tracking-[0.1em] text-[#9C7A3C]">
+            Lighthouse
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
 /* ============================================================
    MAIN — FirstSection (hero only, per brief)
 ============================================================ */
@@ -519,7 +790,7 @@ export default function FirstSection() {
       </nav> */}
 
       {/* hero grid */}
-      <div className="relative z-10 grid grid-cols-1 items-center gap-16 px-[6vw] pb-14 pt-20 md:grid-cols-[1.05fr_0.95fr] md:pt-30">
+      <div className="relative z-10 grid grid-cols-1 items-center gap-6 px-[6vw] pb-14 pt-20 md:grid-cols-[1.05fr_0.95fr] md:pt-30">
         <div>
           {/* <div
             className={`transition-all duration-700 ease-out ${
@@ -533,7 +804,7 @@ export default function FirstSection() {
           </div> */}
 
           <h1
-            className={`mt-8 font-[var(--font-display)] text-[clamp(46px,6vw,88px)] font-medium leading-[1.02] tracking-tight transition-all duration-700 ease-out ${
+            className={`mt-8 font-[var(--font-display)] text-[clamp(46px,4vw,88px)] font-medium leading-[1.02] tracking-tight transition-all duration-700 ease-out ${
               showHeadline ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
           >
@@ -561,7 +832,7 @@ export default function FirstSection() {
           </h1>
 
 <p
-  className={`mt-8 max-w-[540px] text-[18px] leading-[1.75] text-[#6B6B74] transition-all duration-700 ease-out ${
+  className={`mt-2 max-w-[540px] text-[18px] leading-[1.75] text-[#6B6B74] transition-all duration-700 ease-out ${
     showCopy ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
   }`}
 >
@@ -589,7 +860,7 @@ export default function FirstSection() {
 </p>
 
           <div
-            className={`mt-10 flex flex-wrap items-center gap-5 transition-all duration-700 ease-out ${
+            className={`mt-4 flex flex-wrap items-center gap-5 transition-all duration-700 ease-out ${
               showActions ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >
@@ -609,7 +880,7 @@ export default function FirstSection() {
           </div>
 
           <div
-            className={`mt-10 flex flex-wrap gap-8 transition-all duration-700 ease-out ${
+            className={`mt-4 flex flex-wrap gap-8 transition-all duration-700 ease-out ${
               showStats ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >

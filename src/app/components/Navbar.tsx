@@ -281,36 +281,14 @@ export default function Navbar() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 shrink-0">
           <Image
-            src="/akoralogopngfinal.png"
+            src="/akoralogo.svg"
             alt="AKORA Technologies Logo"
             width={38}
             height={38}
-            className="w-12 h-12 object-contain"
+            className="w-42 h-12 object-contain"
           />
 
- <span
-  className={`font-display relative hidden lg:inline-flex font-bold text-lg transition-colors ${
-    scrolled ? "text-ink" : "text-black"
-  }`}
->
-  AKORA Technologies
 
-    <svg
-      viewBox="0 0 420 18"
-      preserveAspectRatio="none"
-      className="absolute -bottom-2 left-0 w-full h-[16px] pointer-events-none"
-    >
-      <path
-        d="M2 13 C 100 4, 320 4, 418 13"
-        fill="none"
-        stroke="#C7A165"
-        strokeWidth="3"
-        strokeLinecap="round"
-        className="animate-akora-draw"
-        pathLength={1}
-      />
-    </svg>
-</span>
         </a>
 
         {/* Desktop nav */}

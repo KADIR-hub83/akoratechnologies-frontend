@@ -394,26 +394,26 @@ export default function ShowcaseSection() {
               : "translate-y-6 opacity-0"
           }`}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C9A56A]/25 bg-white/[0.03] px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A]">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#C9A56A]/25 bg-white/[0.03] px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#C9A56A]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#C9A56A]" />
             How We Work
           </div>
 
-          <h2 className="font-serif text-4xl italic leading-[1.15] text-white sm:text-5xl">
+          <h2 className="font-serif text-4xl italic leading-[1.15] text-white sm:text-4xl">
             Every project,{" "}
             <span className="not-italic font-sans">
               one command center.
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-md text-[15px] leading-relaxed text-white/50">
+          <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-white/50">
             AKORA keeps your team, our engineers and every update in one
             place — so nothing gets lost between the brief and the launch.
           </p>
         </div>
 
         {/* Bento Grid */}
-        <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* LEFT — Tall Card */}
           <RevealCard
             delay={0}

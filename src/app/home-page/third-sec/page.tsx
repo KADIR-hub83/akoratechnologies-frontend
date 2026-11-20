@@ -191,25 +191,25 @@ export default function MobileAppSection() {
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 lg:grid-cols-2">
         {/* LEFT — copy */}
         <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#B8935B]/30 bg-white/60 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#14110D]/60">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#B8935B]/30 bg-white/60 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#14110D]/60">
             <span className="h-1.5 w-1.5 rounded-full bg-[#B8935B]" />
             Mobile Application Development
           </div>
 
-          <h2 className="font-serif text-4xl italic leading-[1.15] text-[#14110D] sm:text-5xl">
+          <h2 className="font-serif text-4xl italic leading-[1.15] text-[#14110D] sm:text-4xl">
             How AKORA builds
             <br />
             <span className="not-italic font-sans font-normal">mobile apps.</span>
           </h2>
 
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[#14110D]/60">
+          <p className="mt-2 max-w-md text-[15px] leading-relaxed text-[#14110D]/60">
             Every AKORA app is engineered natively for iOS and Android from
             day one — no bloated wrappers, no compromise on speed. Design,
             code and QA happen under one roof, so what ships feels as fast
             as it looks.
           </p>
 
-          <ul className="mt-10 space-y-5">
+          <ul className="mt-4 space-y-5">
             {[
               { n: "01", label: "Product design & flow mapping" },
               { n: "02", label: "Native iOS & Android engineering" },
@@ -227,7 +227,7 @@ export default function MobileAppSection() {
 
           <a
             href="/home-page/contact"
-            className="group mt-10 inline-flex items-center gap-2 rounded-full bg-[#14110D] px-7 py-3.5 text-sm font-medium text-[#FAF7F0] transition-transform duration-300 hover:-translate-y-0.5"
+            className="group mt-2 inline-flex items-center gap-2 rounded-full bg-[#14110D] px-7 py-3.5 text-sm font-medium text-[#FAF7F0] transition-transform duration-300 hover:-translate-y-0.5"
           >
             Start Your App
             <span className="transition-transform duration-300 group-hover:translate-x-1">

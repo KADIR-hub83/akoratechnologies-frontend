@@ -189,7 +189,8 @@ const organizationSchema = {
   "name": "AKORA Technologies",
   "alternateName": [
     "Akora Technologies",
-    "AKORA",
+    "akora",
+    "Akora",
     "Akora Software Development Company"
   ],
 
@@ -222,7 +223,9 @@ const organizationSchema = {
     "https://x.com/akoratechno",
     "https://www.linkedin.com/in/akora-technologies-37ab33426/",
     "https://www.instagram.com/akora_technologies/",
-    "https://www.facebook.com/share/19khgw7LYs/"
+    "https://www.facebook.com/share/19khgw7LYs/",
+     "https://www.youtube.com/@AKORATechnologies"
+
   ],
 
   "knowsAbout": [
@@ -310,15 +313,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(
-              /</g,
-              "\\u003c"
-            ),
-          }}
-        />
 
 <script
   type="application/ld+json"

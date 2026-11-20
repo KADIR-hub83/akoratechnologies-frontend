@@ -704,18 +704,18 @@ function AboutHero() {
  */
 function AboutNarrative() {
   return (
-    <section className="px-6 py-8 md:px-12" style={{ backgroundColor: TOKENS.cream }}>
+    <section className="px-6 py-6 md:px-12" style={{ backgroundColor: TOKENS.cream }}>
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 lg:grid-cols-[1fr_0.85fr]">
         <Reveal>
           <Eyebrow>Who we are</Eyebrow>
-          <h2 className="mt-6 max-w-lg font-serif text-[clamp(1.8rem,3.4vw,2.6rem)] leading-tight text-[#141414]">
+          <h2 className="mt-2 max-w-lg font-serif text-[clamp(1.8rem,1.4vw,2.6rem)] leading-tight text-[#141414]">
             A single build team for everything a modern brand needs to{" "}
             <span className="italic">show up</span>, and everything an
             engineering-led company needs to{" "}
             <span className="italic">invent</span>.
           </h2>
 
-          <div className="mt-7 space-y-5 text-[15.5px] leading-relaxed text-[#57564F]">
+          <div className="mt-2 space-y-2 text-[15.5px] leading-relaxed text-[#57564F]">
             <p>
               AKORA Technologies was founded on a simple observation: most
               companies split their web presence, their growth engine, and
@@ -778,10 +778,10 @@ function MissionVisionValue() {
   return (
     <section className="px-6 py-8 md:px-12" style={{ backgroundColor: TOKENS.creamSoft }}>
       <div className="mx-auto max-w-6xl">
-        <Reveal className="mb-14 flex items-end justify-between gap-8 flex-wrap">
+        <Reveal className="mb-2 flex items-end justify-between gap-8 flex-wrap">
           <div>
             <Eyebrow>Direction</Eyebrow>
-            <h2 className="mt-6 max-w-xl font-serif text-[clamp(1.8rem,3.4vw,2.6rem)] leading-tight text-[#141414]">
+            <h2 className="mt-2 max-w-xl font-serif text-[clamp(1.8rem,1.4vw,2.6rem)] leading-tight text-[#141414]">
               What drives the build, <span className="italic">top to bottom.</span>
             </h2>
           </div>
@@ -826,11 +826,11 @@ function CapabilitiesGrid() {
   return (
     <section
       id="capabilities"
-      className="px-6 py-8 md:px-12"
+      className="px-6 py-6 md:px-12"
       style={{ backgroundColor: TOKENS.cream }}
     >
       <div className="mx-auto max-w-6xl">
-        <Reveal className="mb-14 max-w-xl">
+        <Reveal className="mb-2 max-w-xl">
           <SectionHeading
             eyebrow="Capabilities"
             lineOne="Six disciplines."
@@ -851,10 +851,10 @@ function CapabilitiesGrid() {
                     {domain.index}
                   </span>
                 </div>
-                <h3 className="mb-2.5 font-serif text-lg text-[#141414]">
+                <h3 className="mb-2 font-serif text-lg text-[#141414]">
                   {domain.title}
                 </h3>
-                <p className="mb-5 text-[14px] leading-relaxed text-[#6B6A63]">
+                <p className="mb-2 text-[14px] leading-relaxed text-[#6B6A63]">
                   {domain.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -940,7 +940,7 @@ function JourneyTimeline() {
   return (
     <section className="px-6 py-8 md:px-12" style={{ backgroundColor: TOKENS.cream }}>
       <div className="mx-auto max-w-5xl">
-        <Reveal className="mb-16 max-w-xl">
+        <Reveal className="mb-2 max-w-xl">
           <SectionHeading
             eyebrow="Flight log"
             lineOne="How AKORA got to"
@@ -1082,7 +1082,7 @@ function FaqAccordion() {
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <Reveal>
           <Eyebrow>FAQ</Eyebrow>
-          <h2 className="mt-6 max-w-sm font-serif text-[clamp(1.8rem,3.2vw,2.4rem)] leading-tight text-[#141414]">
+          <h2 className="mt-6 max-w-sm font-serif text-[clamp(1.8rem,2.2vw,2.4rem)] leading-tight text-[#141414]">
             Questions we get <span className="italic">before kickoff.</span>
           </h2>
           <p className="mt-6 max-w-sm text-[14.5px] leading-relaxed text-[#6B6A63]">

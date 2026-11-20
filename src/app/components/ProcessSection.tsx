@@ -274,7 +274,7 @@ export default function ProcessSection() {
   } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#F5F1E8] px-6 py-8 sm:px-10 md:px-16">
+    <section className="relative w-full overflow-hidden bg-[#F5F1E8] px-6 py-8 sm:px-10 md:px-10">
       {/* Rich ambient color washes */}
       <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-[#B8935B]/20 blur-[100px]" />
 
@@ -292,12 +292,12 @@ export default function ProcessSection() {
               : "translate-y-6 opacity-0"
           }`}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#B8935B]/30 bg-white/50 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#14110D]/60">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#B8935B]/30 bg-white/50 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#14110D]/60">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#B8935B]" />
             Our Process
           </div>
 
-          <h2 className="font-serif text-4xl italic leading-[1.15] text-[#14110D] sm:text-5xl">
+          <h2 className="font-serif text-4xl italic leading-[1.15] text-[#14110D] sm:text-4xl">
             We don&apos;t just build websites.
             <br />
 
@@ -318,7 +318,7 @@ export default function ProcessSection() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-md text-[15px] leading-relaxed text-[#14110D]/55">
+          <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-[#14110D]/55">
             AKORA TECHNOLOGIES follows one disciplined process on every
             engagement — no shortcuts, no templates, no surprises.
           </p>
@@ -327,7 +327,7 @@ export default function ProcessSection() {
         {/* Sequential progress line */}
         <div
           ref={lineRef}
-          className="relative mx-auto mt-14 hidden max-w-4xl md:block"
+          className="relative mx-auto mt-2 hidden max-w-4xl md:block"
         >
           <div className="h-[3px] w-full overflow-hidden rounded-full bg-[#14110D]/8">
             <div
@@ -341,7 +341,7 @@ export default function ProcessSection() {
         </div>
 
         {/* Step grid */}
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <StepCard
               key={step.index}
@@ -352,7 +352,7 @@ export default function ProcessSection() {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 flex flex-col items-center gap-5 text-center">
+        <div className="mt-2 flex flex-col items-center gap-2 text-center">
           <p className="text-sm text-[#14110D]/50">
             Same process. Every project. No exceptions.
           </p>
